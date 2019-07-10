@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Udaan | View Tasks of Worker</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .card-padding{
+        margin:2%;
+    }
+</style>
+
+<body>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 style="text-align:center;">View Tasks of Worker</h1>
+        <p style="text-align:center;"><button class="btn btn-secondary" onclick="location.href='/'">Home</button></p>
+    </div>
+</div>
+
+<<div class="container" id="workerView">
+</div>
+
+<script>
+    var  workerData = <%- JSON.stringify(data) %>;
+    console.log(workerData);
+    var arrayLength =  workerData.length;
+    for (var i = 0; i < arrayLength; i++) {
+        let card = document.createElement('div');
+        card.className = "card card-padding";
+
+        let header1 = document.createElement('div');
+        header1.className = "card-header";
+        header1.innerHTML = "Asset ID: " +  workerData[i].assetID;
+
+        let body1 = document.createElement('div');
+        body1.className = "card-body";
+        body1.innerHTML = "Task ID: " +  workerData[i].taskID;
+
+        let header2 = document.createElement('div');
+        header2.className = "card-header";
+        header2.innerHTML = "Worker ID: " +  workerData[i].workerID;
+
+        let body2 = document.createElement('div');
+        body2.className = "card-body";
+        body2.innerHTML = "Time of Allocation: " +  workerData[i].timeOfAllocation;
+
+        let footer = document.createElement('div');
+        footer.className = "card-footer";
+        footer.innerHTML = "Task to be Completed by: " +  workerData[i].taskToBePerformedBy;
+
+        card.appendChild(header1);
+        card.appendChild(body1);
+        card.appendChild(header2);
+        card.appendChild(body2);
+        card.appendChild(footer);
+        document.getElementById('workerView').appendChild(card);
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Udaan | View all Workers</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .card-padding{
+        margin:2%;
+    }
+</style>
+
+<body>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 style="text-align:center;">View all Workers</h1>
+        <p style="text-align:center;"><button class="btn btn-secondary" onclick="location.href='/'">Home</button></p>
+    </div>
+</div>
+
+<<div class="container" id="workerView">
+</div>
+
+<script>
+    var  workerData = <%- JSON.stringify(data) %>;
+    console.log(workerData);
+    var arrayLength =  workerData.length;
+    for (var i = 0; i < arrayLength; i++) {
+        let card = document.createElement('div');
+        card.className = "card card-padding";
+
+        let header = document.createElement('div');
+        header.className = "card-header";
+        header.innerHTML = "Name: " +  workerData[i].name;
+
+        let body = document.createElement('div');
+        body.className = "card-body";
+        body.innerHTML = "Skillset: " +  workerData[i].skillset;
+
+        let footer = document.createElement('div');
+        footer.className = "card-footer";
+
+        let button = document.createElement('button');
+        button.className = "btn btn-secondary";
+        button.innerHTML = "View Worker's tasks";
+        button.id =  workerData[i]._id;
+        button.addEventListener('click', function(){
+            window.location.href = "/get-worker/" +  this.id;
+        }, false);
+
+        footer.appendChild(button);
+
+        card.appendChild(header);
+        card.appendChild(body);
+        card.appendChild(footer);
+        document.getElementById('workerView').appendChild(card);
+    }
+
+</script>
+
+</body>
+</html>

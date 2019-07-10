@@ -1,11 +1,303 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+<html lang="en">
+<head>
+  <title>Udaan | Admin Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <style>
+    .menu-btn{
+      padding:5%;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<!--- --------------------------- MODALS (start)------------------------------------------------ -->
+
+<!-- Add Asset Modal -->
+<div class="modal" id="addAsset">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add an Asset</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form id="addAssetForm">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><spam style="color: black">Name</spam></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="name" placeholder="Enter name of asset">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><spam style="color: black">Location</spam></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="location" placeholder="Enter location of asset">
+            </div>
+          </div>
+          <div class="form-group row" style="text-align:center;">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-secondary" id="addAssetBtn">Add Asset</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add Task Modal -->
+<div class="modal" id="addTask">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Task</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form id="addTaskForm">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><spam style="color: black">Name</spam></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="name" placeholder="Enter name of task">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><spam style="color: black">Skillset</spam></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="skillset" placeholder="Enter skillset (Eg: - gardening,janitor,cooking)">
+            </div>
+          </div>
+          <div class="form-group row" style="text-align:center;">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-secondary" id="addTaskBtn">Add Task</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Add Worker Modal -->
+<div class="modal" id="addWorker">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Add a Worker</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <form id="addWorkerForm">
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><spam style="color: black">Name</spam></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="name" placeholder="Enter name of task">
+            </div>
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-2 col-form-label"><spam style="color: black">Skillset</spam></label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" name="skillset" placeholder="Enter skillset (Eg: - gardening,janitor,cooking)">
+            </div>
+          </div>
+          <div class="form-group row" style="text-align:center;">
+            <div class="col-sm-12">
+              <button type="button" class="btn btn-secondary" id="addWorkerBtn">Add Worker</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!--- --------------------------- MODALS (end)------------------------------------------------ -->
+
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 style="text-align: center;">Admin Home</h1>
+    <p style="text-align: center;">Prepared by Hemant H Kumar for Udaan First Round (Housekeeping in Order)</p>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm menu-btn">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addAsset">Add an Asset</button>
+    </div>
+    <div class="col-sm menu-btn">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addTask">Add a Task</button>
+    </div>
+    <div class="col-sm menu-btn">
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addWorker">Add a Worker</button>
+    </div>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm menu-btn">
+      <button class="btn btn-warning">View all Assets</button>
+    </div>
+    <div class="col-sm menu-btn">
+      <button class="btn btn-warning">View all Workers</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+  //Handling Add Asset
+  $("#addAssetBtn").click(function(){
+      parseField = function( $object ){
+          result = new Array();
+          $object.find('select[value!=""], input[value!=""]').each(function(){
+              var obj = {};
+              obj.key = $(this).attr('name');
+              obj.val = $(this).val();
+              result.push( obj );
+          });
+          return result;
+      }
+      data = {};
+      var values = parseField( $('#addAssetForm') );
+      console.log(values);
+      $.each(values, function(i,obj){
+          data[obj.key] = obj.val;
+      });
+      data = JSON.stringify(data);
+
+      $.ajax({
+          url: '/add-asset',
+          type: 'post',
+          dataType: 'json',
+          contentType: 'application/json',
+          success: function (data) {
+              console.log(data);
+              if (data.code && data.code === 1) {
+                  alert(data.message);
+              }
+              else {
+                  alert(data.message);
+              }
+          },
+          data: data
+      });
+  });
+
+  //Handling Add Task
+  $("#addTaskBtn").click(function(){
+      parseField = function( $object ){
+          result = new Array();
+          $object.find('select[value!=""], input[value!=""]').each(function(){
+              var obj = {};
+              obj.key = $(this).attr('name');
+              obj.val = $(this).val();
+              result.push( obj );
+          });
+          return result;
+      }
+      data = {};
+      var values = parseField( $('#addTaskForm') );
+      console.log(values);
+      $.each(values, function(i,obj){
+          data[obj.key] = obj.val;
+      });
+      data = JSON.stringify(data);
+
+      $.ajax({
+          url: '/add-task',
+          type: 'post',
+          dataType: 'json',
+          contentType: 'application/json',
+          success: function (data) {
+              console.log(data);
+              if (data.code && data.code === 1) {
+                  alert(data.message);
+              }
+              else {
+                  alert(data.message);
+              }
+          },
+          data: data
+      });
+  });
+
+  //Handling Add Task
+  $("#addWorkerBtn").click(function(){
+      parseField = function( $object ){
+          result = new Array();
+          $object.find('select[value!=""], input[value!=""]').each(function(){
+              var obj = {};
+              obj.key = $(this).attr('name');
+              obj.val = $(this).val();
+              result.push( obj );
+          });
+          return result;
+      }
+      data = {};
+      var values = parseField( $('#addWorkerForm') );
+      console.log(values);
+      $.each(values, function(i,obj){
+          data[obj.key] = obj.val;
+      });
+      data = JSON.stringify(data);
+
+      $.ajax({
+          url: '/add-worker',
+          type: 'post',
+          dataType: 'json',
+          contentType: 'application/json',
+          success: function (data) {
+              console.log(data);
+              if (data.code && data.code === 1) {
+                  alert(data.message);
+              }
+              else {
+                  alert(data.message);
+              }
+          },
+          data: data
+      });
+  });
+</script>
+
+</body>
 </html>

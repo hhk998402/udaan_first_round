@@ -3,6 +3,10 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+
+console.log("In Directory: ",__dirname);
+require('dotenv').config({path: __dirname + '/.env'});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -21,6 +25,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+//CONNECTING TO MONGODB ON START
+console.log("HEMANT");
+console.log(process.env.MONGODB);
+mongoose.connect(process.env.MONGODB, function(err) {
+    if (err) {
+        console.log(err);
+        //process.exit(1);
+    } else {
+        console.log('Database ready to use.');
+    }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
