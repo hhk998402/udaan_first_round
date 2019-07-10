@@ -200,9 +200,33 @@ router.get('/assets/all', function(req, res, next) {
             });
         }
         else {
-            res.render('allAssets.ejs',{
-                code: 0,
-                data: assets
+            taskData.find({}).exec((err, tasks) => {
+                if (err) {
+                    console.log(err);
+                    res.send({
+                        code: 1,
+                        message: 'DB Error, please try again'
+                    });
+                }
+                else {
+                    workerData.find({}).exec((err, workers) => {
+                        if (err) {
+                            console.log(err);
+                            res.send({
+                                code: 1,
+                                message: 'DB Error, please try again'
+                            });
+                        }
+                        else {
+                            res.render('allAssets.ejs',{
+                                code: 0,
+                                assetData: assets,
+                                taskData:tasks,
+                                workerData:workers
+                            });
+                        }
+                    });
+                }
             });
         }
     });

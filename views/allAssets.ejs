@@ -17,6 +17,69 @@
 
 <body>
 
+<!-- Allocate Work Modal -->
+<div class="modal" id="allocateWork">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Allocate Work</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="allocateWorkForm">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><spam style="color: black">Asset ID: </spam></label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="assetID" id="assetID" placeholder="Asset ID" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><spam style="color: black">Task ID: </spam></label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="taskID" name="taskID">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><spam style="color: black">Worker ID: </spam></label>
+                        <div class="col-sm-10">
+                            <select class="form-control" id="workerID" name="workerID">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><spam style="color: black">Time of Allocation: </spam></label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" name="timeOfAllocation" id="timeOfAllocation" placeholder="Time of Allocation">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label"><spam style="color: black">Task to be Completed by: </spam></label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" name="taskToBePerformedBy" id="taskToBePerformedBy" placeholder="Time at which task has to be completed">
+                        </div>
+                    </div>
+                    <div class="form-group row" style="text-align:center;">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-secondary" id="addAllocation">Add Work Allocation</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <h1 style="text-align:center;">View all Assets</h1>
@@ -28,7 +91,7 @@
 </div>
 
 <script>
-    var assetData = <%- JSON.stringify(data) %>;
+    var assetData = <%- JSON.stringify(assetData) %>;
     var arrayLength = assetData.length;
     for (var i = 0; i < arrayLength; i++) {
         let card = document.createElement('div');
@@ -49,6 +112,10 @@
         button.className = "btn btn-secondary";
         button.innerHTML = "Allocate Work";
         button.id = assetData[i]._id;
+        button.addEventListener('click', function(){
+            document.getElementById("assetID").value = this.id;
+        }, false);
+
 
         footer.appendChild(button);
 
@@ -56,11 +123,70 @@
         card.appendChild(body);
         card.appendChild(footer);
         document.getElementById('assetView').appendChild(card);
-
-        var name = document.createElement('h5');
-        name.innerHTML = v_details.events[key].name;
+        $("#"+assetData[i]._id).attr("data-toggle","modal");
+        $("#"+assetData[i]._id).attr("data-target","#allocateWork");
     }
 
+
+    let taskData = <%- JSON.stringify(taskData) %>;
+    arrayLength = taskData.length;
+
+    for (let i = 0; i < arrayLength; i++) {
+        let option = document.createElement('option');
+        option.innerHTML = taskData[i].name + " ; " + taskData[i]._id;
+        option.value = taskData[i]._id;
+        document.getElementById('taskID').appendChild(option);
+    }
+
+    let workerData = <%- JSON.stringify(workerData) %>;
+    arrayLength = workerData.length;
+
+    for (let i = 0; i < arrayLength; i++) {
+        let option = document.createElement('option');
+        option.innerHTML = workerData[i].name + " ; " + workerData[i]._id;
+        option.value = workerData[i]._id;
+        document.getElementById('workerID').appendChild(option);
+    }
+
+</script>
+
+<script>
+    $("#addAllocation").click(function(){
+        parseField = function( $object ){
+            result = new Array();
+            $object.find('select[value!=""], input[value!=""]').each(function(){
+                var obj = {};
+                obj.key = $(this).attr('name');
+                obj.val = $(this).val();
+                result.push( obj );
+            });
+            return result;
+        }
+        let data = {};
+        var values = parseField( $('#allocateWorkForm') );
+        console.log(values);
+        $.each(values, function(i,obj){
+            data[obj.key] = obj.val;
+        });
+        data = JSON.stringify(data);
+
+        $.ajax({
+            url: '/allocate-task',
+            type: 'post',
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data) {
+                console.log(data);
+                if (data.code && data.code === 1) {
+                    alert(data.message);
+                }
+                else {
+                    alert(data.message);
+                }
+            },
+            data: data
+        });
+    });
 </script>
 
 </body>
